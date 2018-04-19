@@ -1,0 +1,29 @@
+<doctype html>
+    <head>
+        <meta charset="utf-8">
+        <title>Clojure? What's clojure?</title>
+    </head>
+    <body>
+        <div id="output"></div>
+        <script>
+            const print = (msg) => document.querySelector("#output")
+                .innerHTML += (msg + '<br>');
+            
+            const mySwitch = ([[test, value], ...otherCases]) => 
+                (test)
+                ? value
+                : (otherCases)
+                    ? mySwitch(otherCases)
+                    : undefined;
+            
+            const max = 100;
+            Array(max).fill().map((_, i) => i + 1)
+                .map(n => mySwitch([
+                    [n % 15 == 0, "fizzbuzz"],
+                    [n % 3 == 0, "fizz"],
+                    [n % 5 == 0, "buzz"],
+                    [true, n]]))
+                .forEach(x => print(x));
+        </script>
+    </body>
+</doctype>
