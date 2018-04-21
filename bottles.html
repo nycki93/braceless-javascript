@@ -1,0 +1,82 @@
+<doctype html>
+<html><head>
+	<title>Check out my new framework, lambda.js</title>
+	<meta charset="utf-8"></head>
+
+<body>
+	<div id="output"></div>
+	
+<script>
+	const print = (msg) =>
+		document.querySelector("#output").innerHTML += 
+			msg.replace(/\n/g, "<br>")
+			+ "<br>"
+
+	const mySwitch = ([[test, value], ...otherCases]) => (test)
+		? value
+		: (otherCases)
+			? mySwitch(otherCases)
+			: undefined
+
+	const SMALL_NUMBERS = [
+		"no more",	
+		"one",
+		"two",
+		"three",
+		"four",
+		"five",
+		"six",
+		"seven",
+		"eight",
+		"nine",
+		"ten",
+		"eleven",
+		"twelve",
+		"thirteen",
+		"fourteen",
+		"fifteen",
+		"sixteen",
+		"seventeen",
+		"eighteen",
+		"nineteen"]
+
+	const LARGE_NUMBERS = [
+		"",		
+		"",
+		"twenty",
+		"thirty",
+		"forty",
+		"fifty",
+		"sixty",
+		"seventy",
+		"eighty",
+		"ninety"]
+
+	const countBottles = (n) => (n == 1) 
+		? "one bottle"
+		: mySwitch([
+			[n < 20, SMALL_NUMBERS[n]],
+			[n % 10 == 0, LARGE_NUMBERS[n / 10]],
+			[true, LARGE_NUMBERS[Math.floor(n / 10)]
+				+ "-"
+				+ SMALL_NUMBERS[n % 10]]]) 
+		  + " bottles"
+
+	const cap = (str) => str[0].toUpperCase() + str.slice(1)
+
+	const bottlesVerse = (numberOfBottles, newNumberOfBottles, lastVerse) => ""
+		+ cap(numberOfBottles) + " of beer on the wall, "
+		+ numberOfBottles + " of beer.\n"
+		+ (lastVerse
+			? "Go to the store and buy some more, "
+			: "Take one down and pass it around, ")
+		+ newNumberOfBottles + " of beer on the wall."
+
+	const bottlesSong = (n) => (n == 0)
+		? bottlesVerse(countBottles(0), countBottles(99), true)
+		: bottlesVerse(countBottles(n), countBottles(n-1), false)
+			+ "\n\n" + bottlesSong(n-1)
+
+	print(bottlesSong(99))
+
+	</script></body></html>
