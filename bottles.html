@@ -1,77 +1,79 @@
 <doctype html>
 <html><head>
-	<title>Check out my new framework, lambda.js</title>
-	<meta charset="utf-8"></head>
+    <title>Check out my new framework, lambda.js</title>
+    <meta charset="utf-8"></head>
 
 <body>
-	<div id="output"></div>
-	
+    <div id="output"></div>
+    
 <script>
-	const print = (msg) =>
-		document.querySelector("#output").innerHTML += 
-			msg.replace(/\n/g, "<br>")
-			+ "<br>"
+    "use strict"
+    const out = document.getElementById("output")
 
-	const SMALL_NUMBERS = [
-		"no more",	
-		"one",
-		"two",
-		"three",
-		"four",
-		"five",
-		"six",
-		"seven",
-		"eight",
-		"nine",
-		"ten",
-		"eleven",
-		"twelve",
-		"thirteen",
-		"fourteen",
-		"fifteen",
-		"sixteen",
-		"seventeen",
-		"eighteen",
-		"nineteen"]
+    const print = (msg) => out.innerHTML = out.innerHTML
+        + msg.replace(/\n/g, "<br>")
+        + "<br>"
 
-	const LARGE_NUMBERS = [
-		"",		
-		"",
-		"twenty",
-		"thirty",
-		"forty",
-		"fifty",
-		"sixty",
-		"seventy",
-		"eighty",
-		"ninety"]
+    const SMALL_NUMBERS = [
+        "no more",	
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        "ten",
+        "eleven",
+        "twelve",
+        "thirteen",
+        "fourteen",
+        "fifteen",
+        "sixteen",
+        "seventeen",
+        "eighteen",
+        "nineteen"]
 
-	const countBottles = (n) => 
-		n == 1 ? "one bottle"
-		: n < 20 ? SMALL_NUMBERS[n] + " bottles"
-		: n % 10 == 0 ? LARGE_NUMBERS[n / 10] + " bottles"
-		: LARGE_NUMBERS[Math.floor(n / 10)]
-		  + "-"
-		  + SMALL_NUMBERS[n % 10]
-		  + " bottles"
+    const LARGE_NUMBERS = [
+        "",		
+        "",
+        "twenty",
+        "thirty",
+        "forty",
+        "fifty",
+        "sixty",
+        "seventy",
+        "eighty",
+        "ninety"]
 
-	const cap = (str) => str[0].toUpperCase() + str.slice(1)
+    const countBottles = (n) => 
+        n == 1 ? "one bottle"
+        : n < 20 ? SMALL_NUMBERS[n] + " bottles"
+        : n % 10 == 0 ? LARGE_NUMBERS[n / 10] + " bottles"
+        : LARGE_NUMBERS[Math.floor(n / 10)]
+            + "-"
+            + SMALL_NUMBERS[n % 10]
+            + " bottles"
 
-	const bottlesVerse = (numberOfBottles, newNumberOfBottles, lastVerse) =>
-		cap(numberOfBottles) + " of beer on the wall, "
-		+ numberOfBottles + " of beer.\n"
-		+ (lastVerse
-			? "Go to the store and buy some more, "
-			: "Take one down and pass it around, ")
-		+ newNumberOfBottles + " of beer on the wall."
+    const cap = (str) => str[0].toUpperCase() + str.slice(1)
 
-	const bottlesSong = (i, n) => 
-		n == undefined ? bottlesSong(i, i)
-		: i == 0 ? bottlesVerse(countBottles(0), countBottles(n), true)
-		: bottlesVerse(countBottles(i), countBottles(i-1), false)
-		  + "\n\n"
-		  + bottlesSong(i-1, n)
+    const bottlesVerse = (numberOfBottles, newNumberOfBottles, lastVerse) =>
+        cap(numberOfBottles) + " of beer on the wall, "
+        + numberOfBottles + " of beer.\n"
+        + (lastVerse
+            ? "Go to the store and buy some more, "
+            : "Take one down and pass it around, ")
+        + newNumberOfBottles + " of beer on the wall."
 
-	print(bottlesSong(99))
+    const bottlesSong = (i, n) => 
+        n == undefined ? bottlesSong(i, i)
+        : i == 0 ? bottlesVerse(countBottles(0), countBottles(n), true)
+        : bottlesVerse(countBottles(i), countBottles(i-1), false)
+            + "\n\n"
+            + bottlesSong(i-1, n)
 
-	</script></body></html>
+    print(bottlesSong(99))
+
+    </script></body></html>
