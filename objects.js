@@ -33,11 +33,11 @@ const main = withMy((my) => (
 ));
 
 console.log(main());
-// { one: 1, two: 2, three: 'fizz', four: 4, five: 'buzz' }
+// -> { one: 1, two: 2, three: 'fizz', four: 4, five: 'buzz' }
 
 // bonus round: error catching without curly braces!
 (Promise.resolve()
   .then(() => console.log(my))
   .catch((err) => console.log(err.message))
 );
-// my is not defined
+// -> my is not defined
