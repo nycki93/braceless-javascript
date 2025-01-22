@@ -2,17 +2,16 @@
 const range = (length) => Array(length).fill().map((_, i) => i);
 
 // use closure to create a 'my' variable
-const withMine = (fn) => (...args) => fn(null, ...args);
+const withMy = (fn) => (...args) => fn(Object(), ...args);
 
 // object literal without curly braces
-const obj = withMine((my, ...items) => (
-  my = range(items.length / 2).map((i) => [items[2*i], items[2*i + 1]]),
-  Object.fromEntries(my)
+const obj = withMy((my, ...items) => (
+  my.entries = range(items.length / 2).map((i) => [items[2*i], items[2*i + 1]]),
+  Object.fromEntries(my.entries)
 ));
 
 // if-then without curly braces
-const main = (my) => (
-  my = obj('a', null),
+const main = withMy((my) => (
   my.a = obj(
     'one', 1, 
     'two', 2, 
@@ -26,7 +25,11 @@ const main = (my) => (
     my.a[k] % 5 == 0 ? my.a[k] = 'buzz' :
     null
   )),
-  my.a
-);
+  obj('a', my.a, 'entries', my.entries)
+));
 
 console.log(main());
+// {
+//   a: { one: 1, two: 2, three: 'fizz', four: 4, five: 'buzz' },
+//   entries: undefined
+// }
