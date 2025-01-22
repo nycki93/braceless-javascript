@@ -1,34 +1,43 @@
-// for loop without curly braces
+// numeric for loop without curly braces
 const range = (length) => Array(length).fill().map((_, i) => i);
 
 // object literal without curly braces
-const obj = withMy((my, ...items) => Object.fromEntries(
+const obj = (...items) => Object.fromEntries(
   range(items.length / 2).map(i => [items[2*i], items[2*i + 1]])
+);
+
+// trap object inside closure to create local scope
+const withMy = (fn) => (...args) => fn(obj(), ...args);
+
+// for convenience: iterate over object values
+const objectMap = (o, fn) => Object.fromEntries(Object.entries(o).map(
+  ([k, v]) => [k, fn(v)]
 ));
 
-// use closure to create a 'my' variable
-const withMy = (fn) => (...args) => fn(Object(), ...args);
-
-// if-then without curly braces
+// tada!
 const main = withMy((my) => (
-  my.a = obj(
+  my.items = obj(
     'one', 1, 
     'two', 2, 
     'three', 3, 
     'four', 4, 
     'five', 5
   ),
-  Object.keys(my.a).map((k) => (
-    my.a[k] % 15 == 0 ? my.a[k] = 'fizzbuzz' :
-    my.a[k] % 3 == 0 ? my.a[k] = 'fizz' :
-    my.a[k] % 5 == 0 ? my.a[k] = 'buzz' :
-    null
-  )),
-  obj('a', my.a, 'entries', my.entries)
+  my.fizzbuzz = (n) => (
+    n % 15 == 0 ? 'fizzbuzz' :
+    n % 3 == 0 ? 'fizz' :
+    n % 5 == 0 ? 'buzz' :
+    n
+  ),
+  objectMap(my.items, my.fizzbuzz)
 ));
 
 console.log(main());
-// {
-//   a: { one: 1, two: 2, three: 'fizz', four: 4, five: 'buzz' },
-//   entries: undefined
-// }
+// { one: 1, two: 2, three: 'fizz', four: 4, five: 'buzz' }
+
+// bonus round: error catching without curly braces!
+(Promise.resolve()
+  .then(() => console.log(my))
+  .catch((err) => console.log(err.message))
+);
+// my is not defined
