@@ -1,3 +1,5 @@
+"use strict";
+
 // numeric for loop without curly braces
 const range = (length) => Array(length).fill().map((_, i) => i);
 
