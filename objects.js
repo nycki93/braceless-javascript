@@ -43,3 +43,16 @@ console.log(main());
   .catch((err) => console.log(err.message))
 );
 // -> my is not defined
+
+// sanity check: these are really creating new objects every time.
+const obj1 = withMy((my) => (my.sharedKey = 'i love javascript', my))();
+const obj2 = withMy((my) => (my.sharedKey = 'i have mixed-to-neutral feelings about it, honestly', my))();
+
+console.log(obj(
+  'obj1', obj1,
+  'obj2', obj2,
+));
+// -> {
+//   obj1: { sharedKey: 'i love javascript' },
+//   obj2: { sharedKey: 'i have mixed-to-neutral feelings about it, honestly' }
+// }
