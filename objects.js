@@ -1,14 +1,13 @@
 // for loop without curly braces
 const range = (length) => Array(length).fill().map((_, i) => i);
 
+// object literal without curly braces
+const obj = withMy((my, ...items) => Object.fromEntries(
+  range(items.length / 2).map(i => [items[2*i], items[2*i + 1]])
+));
+
 // use closure to create a 'my' variable
 const withMy = (fn) => (...args) => fn(Object(), ...args);
-
-// object literal without curly braces
-const obj = withMy((my, ...items) => (
-  my.entries = range(items.length / 2).map((i) => [items[2*i], items[2*i + 1]]),
-  Object.fromEntries(my.entries)
-));
 
 // if-then without curly braces
 const main = withMy((my) => (
